@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PoC.Data\PoC.Data.csproj" />
+    <ProjectReference Include="..\PoC.DomainEntities\PoC.DomainEntities.csproj" />
+    <ProjectReference Include="..\PoC.Dtos\PoC.Dtos.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
+    <PackageReference Include="coverlet.collector" Version="3.0.2" />
+    <PackageReference Include="FakeItEasy" Version="7.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="FakeItEasy" />
+    <None Remove="BL\" />
+    <None Remove="ClientConsoleTest\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BL\" />
+    <Folder Include="ClientConsoleTest\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PoC.BL\PoC.BL.csproj" />
+    <ProjectReference Include="..\PoC.Client.Console\PoC.Client.Console.csproj" />
+    <ProjectReference Include="..\PoC.DomainEntities\PoC.DomainEntities.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,89 @@
+﻿@using Dtos.Dtos;
+@page "/jobs"
+@inject HttpClient Http
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+
+<h3>Jobs</h3>
+
+<EditForm Model="@job" OnValidSubmit="@postJob">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="firstName" @bind-Value="job.FirstName" />
+    <InputText id="lastName" @bind-Value="job.LastName" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@if (jobs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Progress</th>
+                <th>Started At</th>
+                <th>Completed At</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job in jobs)
+            {
+              
+
+                <tr>
+                    <td>@job.Status</td>
+                    <td>
+                        <SfProgressBar Type="ProgressType.Linear" Value="@job.Progress" Height="15" Width="90%" TrackColor="#FFFFFF"
+                               ShowProgressValue="true" ProgressColor="#2BB20E" TrackThickness="24" CornerRadius="CornerType.Round"
+                               ProgressThickness="24" Minimum="0" Maximum="100">
+                            <ProgressBarAnimation Enable="true" Duration="2000" Delay="0"></ProgressBarAnimation>
+                        </SfProgressBar>
+                    </td>
+                    <td>@job.StartedAt</td>
+                    <td>@job.CompletedAt</td>
+                    <td>@job.FirstName</td>
+                    <td>@job.LastName</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" @onclick="() => navigate(job.JobId)">Show Result</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@code {
+
+    private List<JobResponseDto> jobs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        jobs = await Http.GetFromJsonAsync<List<JobResponseDto>>("api/jobs");
+    }
+
+
+    private PostJobRequestDto job = new();
+
+    private async Task postJob()
+    {
+        var response = await Http.PostAsJsonAsync("api/jobs/startCalculation", job);
+        jobs = await Http.GetFromJsonAsync<List<JobResponseDto>>("api/jobs");
+    }
+
+    private async Task navigate(Guid id)
+    {
+        navigationManager.NavigateTo($"/result/" + id);
+    }
+
+
+}

@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [ipam]
+    WITH PASSWORD = N'r,qb|UeTDmud|c_bf`|v+qtkmsFT7_&#$!~<dndQ{!p{.+,|', SID = 0x85F17FE5C4177D4B8140920739D8BE1E, DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+

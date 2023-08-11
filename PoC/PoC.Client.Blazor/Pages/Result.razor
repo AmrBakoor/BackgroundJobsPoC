@@ -1,0 +1,25 @@
+﻿@page "/result/{id}"
+@inject HttpClient Http
+@using Dtos.Dtos
+@using Newtonsoft.Json
+
+
+<h3>Result</h3>
+<SfGrid DataSource="@resultDtos" AllowPaging="true"  AllowSorting="true"  AllowFiltering="true">
+ <GridPageSettings PageSize="20"></GridPageSettings>
+ </SfGrid>
+
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+
+    private List<JobResultDto> resultDtos;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var jobStatus = await Http.GetFromJsonAsync<StatusObjectResponseDto>("api/jobs/GetStatus/" + id);          
+        resultDtos = JsonConvert.DeserializeObject<JobResultDto[]>(jobStatus.Result).ToList();      
+    }
+
+}
